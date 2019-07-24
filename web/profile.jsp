@@ -103,18 +103,18 @@
                             </td>
                             <td class="align-middle">
                                 <form method="post" action="add.friend" style="padding-top: 1em;">
-                                <input type="hidden" name="receiverId" value="<%=recommendedUser.getUserId()%>">
-                                <input type="hidden" name="senderId" value="<%=user.getUserId()%>">
-                                <%if ("sent".equals(entry.getValue())) {// has sent request %>
+                                    <input type="hidden" name="receiverId" value="<%=recommendedUser.getUserId()%>">
+                                    <input type="hidden" name="senderId" value="<%=user.getUserId()%>">
+                                    <%if ("sent".equals(entry.getValue())) {// has sent request %>
                                     <button type="submit" class="btn btn-outline-secondary" title="Friend request already sent." disabled>Add</button>
-                                <% } else {// not friend %>
+                                    <% } else {// not friend %>
                                     <button type="submit" class="btn btn-outline-primary">Add</button>
-                                <% }// end of not friend %>
+                                    <% }// end of not friend %>
                                 </form>
                                 <%--<form method="post" action="add.friend" style="padding-top: 1em;">--%>
-                                    <%--<input type="hidden" name="receiverId" value="<%=recommendedUser.getUserId()%>">--%>
-                                    <%--<input type="hidden" name="senderId" value="<%=user.getUserId()%>">--%>
-                                    <%--<button type="submit" class="btn btn-outline-secondary">Add</button>--%>
+                                <%--<input type="hidden" name="receiverId" value="<%=recommendedUser.getUserId()%>">--%>
+                                <%--<input type="hidden" name="senderId" value="<%=user.getUserId()%>">--%>
+                                <%--<button type="submit" class="btn btn-outline-secondary">Add</button>--%>
                                 <%--</form>--%>
                             </td>
                         </tr>

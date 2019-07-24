@@ -1,14 +1,11 @@
 package service.impl;
 
-import dao.FavorDao;
-import dao.FriendshipDao;
-import dao.UsersDao;
-import dao.impl.FavorDaoImp;
-import dao.impl.FriendshipDaoImp;
-import dao.impl.UsersDaoImp;
+import dao.*;
+import dao.impl.*;
 import entity.FavorEntity;
 import entity.FriendshipEntity;
 import entity.UsersEntity;
+import entity.ViewhistoryEntity;
 import service.FriendshipService;
 import service.UserService;
 
@@ -20,6 +17,35 @@ public class UserServiceImp implements UserService {
     private FriendshipDao friendshipDao = new FriendshipDaoImp();
     private FavorDao favorDao = new FavorDaoImp();
     private FriendshipService friendshipService = new FriendshipServiceImp();
+    private ViewHistoryDao viewHistoryDao = new ViewHistoryDaoImp();
+    private DeleteHistoryDao deleteHistoryDao = new DeleteHistoryDaoImp();
+
+    @Override
+    public boolean queryDeleteHistory(int userId, int artworkId) {
+        return deleteHistoryDao.query(userId,artworkId);
+    }
+
+    @Override
+    public void updateViewHistory(int userId, int artworkId) {
+        ViewhistoryEntity viewhistoryEntity = viewHistoryDao.query(userId,artworkId);
+        if (viewhistoryEntity==null)viewHistoryDao.add(userId,artworkId);
+        else {
+            int viewTime = viewhistoryEntity.getViewTime();
+            viewHistoryDao.update(userId,artworkId,viewTime+1);
+        }
+    }
+
+    @Override
+    public void updateDeleteHistory(int userId, int artworkId) {
+        if (!deleteHistoryDao.query(userId, artworkId)) {
+            deleteHistoryDao.add(userId, artworkId);
+            System.out.println("add");
+        } else {
+            deleteHistoryDao.delete(userId, artworkId);
+            System.out.println("delete");
+        }
+    }
+
     @Override
     public UsersEntity login(String username, String password) {
         UsersEntity user = usersDao.query(username, password);
@@ -78,12 +104,26 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void deleteUser(String name) {
-        usersDao.delete(name);
+        UsersEntity usersEntity = usersDao.query(name);
+        int userId = usersEntity.getUserId();
+        usersDao.deleteInUsers(name);
+        usersDao.deleteInDeleteHistory(userId);
+        usersDao.deleteInEmail(name);
+        usersDao.deleteInFavor(userId);
+        usersDao.deleteInfriendship(userId);
+        usersDao.deleteInViewHistory(userId);
     }
 
     @Override
     public void deleteUser(int userId) {
-        usersDao.delete(userId);
+        UsersEntity usersEntity = usersDao.query(userId);
+        String name = usersEntity.getName();
+        usersDao.deleteInViewHistory(userId);
+        usersDao.deleteInfriendship(userId);
+        usersDao.deleteInFavor(userId);
+        usersDao.deleteInEmail(name);
+        usersDao.deleteInDeleteHistory(userId);
+        usersDao.deleteInUsers(name);
     }
 
     @Override

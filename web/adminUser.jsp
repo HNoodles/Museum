@@ -183,6 +183,6 @@
         $('.demo-cancel-click').click(function(){return false;});
     });
 </script>
-<script src="adminPageLib/js/jsForUser.js"></script>
+<script src="resource/js/jsForUser.js"></script>
 
 </body></html>

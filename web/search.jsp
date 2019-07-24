@@ -72,7 +72,7 @@
             %>
         </div>
         <%
-                }
+            }
         %>
         <nav class="mt-3" aria-label="Page navigation example">
             <ul class="pagination justify-content-center">

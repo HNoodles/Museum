@@ -176,7 +176,7 @@
     });
 </script>
 
-<script src="adminPageLib/js/jsForArtwork.js" type="text/javascript"></script>
+<script src="resource/js/jsForArtwork.js" type="text/javascript"></script>
 
 
 </body></html>
